@@ -6,7 +6,7 @@
     xsi:type="MailApp">
 
   <Id>a5b7bb1f-f125-48dc-bcc9-585272892417</Id>
-  <Version>1.0.0.4</Version>
+  <Version>1.0.0.3</Version>
   <ProviderName>Ripple Collective</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
 
@@ -30,7 +30,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://aminalzouabi.github.io/named-signature/autorun.html" />
+        <SourceLocation DefaultValue="https://amin-alz.github.io/named-signature/autorun.html" />
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -81,10 +81,10 @@
         <bt:Urls>
           <bt:Url
               id="Autorun"
-              DefaultValue="https://aminalzouabi.github.io/named-signature/autorun.html" />
+              DefaultValue="https://amin-alz.github.io/named-signature/autorun.html" />
           <bt:Url
               id="runtimeJs"
-              DefaultValue="https://aminalzouabi.github.io/named-signature/signature.js" />
+              DefaultValue="https://amin-alz.github.io/named-signature/signature.js" />
         </bt:Urls>
       </Resources>
 

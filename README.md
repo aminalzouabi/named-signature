@@ -6,7 +6,7 @@ The add-in reads the user's Outlook profile name and email address, selects a br
 
 ## Project status
 
-The current manifest is version **1.0.0.4**. Microsoft 365 accepted the corrected manifest during initial deployment. Successful automatic signature insertion in Outlook still needs to be confirmed before wider rollout.
+The current manifest is version **1.0.0.3**. Microsoft 365 accepted the corrected manifest during initial deployment. Successful automatic signature insertion in Outlook still needs to be confirmed before wider rollout.
 
 ## How it works
 
@@ -44,13 +44,13 @@ The code uses `Office.context.mailbox.userProfile`, not the message's selected F
 
 ## Hosting
 
-GitHub Actions builds and deploys the Pages artifact from `main`. The Boosthis browser key is injected from Actions Secrets; see `BOOSTHIS_SETUP.md`. Version 1.0.0.4 changes the runtime host to this repository's Pages site and must be uploaded through the existing Microsoft 365 installation to take effect. The earlier amin-alz site is separate.
+GitHub Pages serves the files from this repository's `main` branch and root folder.
 
-- [Manifest](https://aminalzouabi.github.io/named-signature/manifest.xml)
-- [Runtime page](https://aminalzouabi.github.io/named-signature/autorun.html)
-- [Signature script](https://aminalzouabi.github.io/named-signature/signature.js)
+- [Manifest](https://amin-alz.github.io/named-signature/manifest.xml)
+- [Runtime page](https://amin-alz.github.io/named-signature/autorun.html)
+- [Signature script](https://amin-alz.github.io/named-signature/signature.js)
 
-The Pages workflow runs `python3 scripts/build_pages.py`; no package installation is required. Changes can be committed to `main` or merged into it from another branch. Wait for the Pages deployment to finish before testing.
+No build step or package installation is required for these static files. Changes can be committed to `main` or merged into it from another branch. Wait for the Pages deployment to finish before testing.
 
 ## Deployment
 
