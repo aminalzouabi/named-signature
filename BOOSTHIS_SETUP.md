@@ -2,7 +2,7 @@
 
 This integration uses the plain HTML instructions for the Boosthis project
 "Outlook automate signature". Production activation requires the steps below.
-The existing signature source and manifest are unchanged.
+The signature source is unchanged. Manifest 1.0.0.4 points to this repository's new Pages host, aminalzouabi.github.io; the previous manifest used amin-alz.github.io, which belongs to a separate site. An administrator must upload the updated manifest to the existing Microsoft 365 installation.
 
 ## Credentials
 
