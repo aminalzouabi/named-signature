@@ -6,7 +6,7 @@ The add-in reads the user's Outlook profile name and email address, selects a br
 
 ## Project status
 
-The current manifest is version **1.0.0.3**. Microsoft 365 accepted the corrected manifest during initial deployment. Successful automatic signature insertion in Outlook still needs to be confirmed before wider rollout.
+The current manifest is version **1.0.0.4**. Microsoft 365 accepted the corrected manifest during initial deployment. Successful automatic signature insertion in Outlook still needs to be confirmed before wider rollout.
 
 ## How it works
 
@@ -46,9 +46,9 @@ The code uses `Office.context.mailbox.userProfile`, not the message's selected F
 
 GitHub Pages serves the files from this repository's `main` branch and root folder.
 
-- [Manifest](https://amin-alz.github.io/named-signature/manifest.xml)
-- [Runtime page](https://amin-alz.github.io/named-signature/autorun.html)
-- [Signature script](https://amin-alz.github.io/named-signature/signature.js)
+- [Manifest](https://aminalzouabi.github.io/named-signature/manifest.xml)
+- [Runtime page](https://aminalzouabi.github.io/named-signature/autorun.html)
+- [Signature script](https://aminalzouabi.github.io/named-signature/signature.js)
 
 No build step or package installation is required for these static files. Changes can be committed to `main` or merged into it from another branch. Wait for the Pages deployment to finish before testing.
 
@@ -69,7 +69,7 @@ If the administrator signs in with a separate admin account, **Just me** may ass
 - Intended for supported Microsoft 365/Exchange Online accounts and Outlook clients supporting Mailbox requirement set 1.10 and event-based activation.
 - The current manifest targets desktop/web clients. Outlook mobile requires additional manifest configuration and testing.
 - `OnNewMessageCompose` covers replies and forwards as well as new messages. It does not run merely because an existing draft is reopened.
-- `OnNewReplyCompose` is not a supported launch event. The manifest no longer registers it. The similarly named unused JavaScript handler remains as cleanup work.
+- `OnNewReplyCompose` is not a supported launch event. Only `OnNewMessageCompose` is registered.
 - Deployment success does not verify that the signature code has executed successfully in every Outlook client.
 
 ## Permissions and data use
@@ -103,7 +103,7 @@ Opening `signature.js?v=5` in a browser only requests that URL. It does not auto
 - [ ] Test new messages, replies, reply-all, and forwards.
 - [ ] Test at least two sub-brands and the Ripple Collective default.
 - [ ] Reduce the manifest permission to `ReadWriteItem` and retest.
-- [ ] Remove the unused reply handler and add exception handling that completes the event on failure.
+- [x] Remove the unused reply handler and complete events on handled API errors and exceptions.
 - [ ] Expand user assignment after the tests pass.
 
 ## Microsoft references
@@ -113,3 +113,19 @@ Opening `signature.js?v=5` in a browser only requests that URL. It does not auto
 - [Outlook add-in permissions](https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/understanding-outlook-add-in-permissions)
 - [Body and signature API](https://learn.microsoft.com/en-us/javascript/api/outlook/office.body?view=outlook-js-preview)
 - [Centralized deployment FAQ](https://learn.microsoft.com/en-us/microsoft-365/admin/manage/centralized-deployment-faq?view=o365-worldwide)
+
+## Signature font update (1.0.0.4)
+
+The generated signature uses scoped internal CSS to request Helvetica at 10pt with a 14pt line height for its text and links. Each text segment has a font-family fallback attribute, and the user's name and company remain bold. It avoids inline CSS, which Microsoft documents as unsupported by setSignatureAsync. The style is scoped to the signature and does not set the message body's font.
+
+Helvetica must be available on the viewing device. Arial and the system sans-serif font are fallbacks; the add-in cannot force remote recipients to install Helvetica. Plain-text emails receive a plain-text signature and cannot preserve font formatting.
+
+The HTML loader and JavaScript runtime URL both use version 1.0.0.4. The manifest now targets this repository owner's GitHub Pages site. Before uploading the updated manifest, enable GitHub Pages on main/root and confirm autorun.html and signature.js are served successfully. Keep the add-in ID when updating an existing installation. Existing installations pointing to amin-alz.github.io continue to use the original site until their manifest is updated.
+
+Run the regression checks with Node.js:
+
+```sh
+node tests/signature.test.cjs
+```
+
+These checks exercise signature generation and mocked Office callbacks, not Outlook's rendering engine. Before broad rollout, send new messages, replies and forwards from Outlook for Windows, Mac and web, then inspect the received messages for consistent size and font fallback. Confirm the CSS survives insertion and sending; internal CSS can also be rewritten by mail clients.
